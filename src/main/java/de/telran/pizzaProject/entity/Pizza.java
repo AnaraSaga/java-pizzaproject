@@ -1,12 +1,23 @@
 package de.telran.pizzaProject.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
+@Entity
+@NoArgsConstructor
+@Table (name = "pizza")
 public class Pizza {
 
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     private String name;
@@ -17,9 +28,4 @@ public class Pizza {
 
     private String image;
 
-
-    public Pizza() {
-        this.id = UUID.randomUUID().toString();
-
-    }
 }

@@ -1,7 +1,8 @@
 package de.telran.pizzaProject.controller;
 
 import de.telran.pizzaProject.entity.Pizza;
-import de.telran.pizzaProject.repository.CommonRepository;
+import de.telran.pizzaProject.repository.PizzaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class PizzaController {
 
-    private final CommonRepository<Pizza> repository;
+    private final PizzaRepository repository;
 
-    public PizzaController(CommonRepository<Pizza> repository) {
+    @Autowired
+    public PizzaController(PizzaRepository repository) {
         this.repository = repository;
     }
 

@@ -1,7 +1,7 @@
 package de.telran.pizzaProject.controller;
 
 import de.telran.pizzaProject.entity.Cafe;
-import de.telran.pizzaProject.repository.CommonRepository;
+import de.telran.pizzaProject.repository.CafeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class CafeController {
-    private final CommonRepository<Cafe> repository;
+    private final CafeRepository repository;
 
-    public CafeController(CommonRepository<Cafe> repository) {
+    public CafeController(CafeRepository repository) {
         this.repository = repository;
     }
 
