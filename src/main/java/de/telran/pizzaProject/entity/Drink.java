@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class Drinks {
+public class Drink {
 
     private String id;
 
@@ -13,13 +13,11 @@ public class Drinks {
 
     private double price;
 
-    private int quantity;
-
     private String description;
 
     private String image;
 
-    public Drinks(String id) {
+    public Drink() {
         this.id = UUID.randomUUID().toString();
     }
 }
