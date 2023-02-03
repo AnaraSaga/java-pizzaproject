@@ -65,4 +65,9 @@ public class DrinkRepository implements CommonRepository <Drink> {
     public Iterable<Drink> findAll() {
         return null;
     }
+
+    @Override
+    public Drink findByName(String name) {
+        return null;
+    }
 }

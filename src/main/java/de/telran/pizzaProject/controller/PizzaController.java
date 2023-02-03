@@ -24,6 +24,5 @@ public class PizzaController {
     @PostMapping("/pizza")
     public ResponseEntity<Pizza> addPizza (@RequestBody Pizza pizza){
         return new ResponseEntity<>(repository.save(pizza), HttpStatus.CREATED);
-
     }
 }

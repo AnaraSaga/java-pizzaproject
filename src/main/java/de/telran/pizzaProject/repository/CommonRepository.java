@@ -15,4 +15,5 @@ public interface CommonRepository<T> {
 
     Iterable<T> findAll();
 
+    T findByName(String name);
 }

@@ -24,6 +24,8 @@ public class PizzaRepository implements CommonRepository<Pizza> {
     private static final String SQL_FIND_BY_ID = "SELECT * FROM pizza " +
             "WHERE id = :id";
 
+    private static final String SQL_FIND_BY_NAME = "SELECT * FROM pizza " +
+            "WHERE name= :name";
     private static final String SQL_UPDATE = "UPDATE pizza SET name = :name, price = :price, " +
             "image = :image, description = :description WHERE id = :id";
 
@@ -41,7 +43,7 @@ public class PizzaRepository implements CommonRepository<Pizza> {
         pizza.setId(rs.getString("id"));
         pizza.setName(rs.getNString("name"));
         pizza.setPrice(rs.getDouble("price"));
-        pizza.setName(rs.getNString("image"));
+        pizza.setImage(rs.getNString("image"));
         pizza.setDescription(rs.getNString("description"));
         return pizza;
     };
@@ -92,5 +94,15 @@ public class PizzaRepository implements CommonRepository<Pizza> {
     @Override
     public Iterable<Pizza> findAll() {
         return jdbcTemplate.query(SQL_FIND_ALL, pizzaRowMapper);
+    }
+
+    @Override
+    public Pizza findByName(String name) {
+        try {
+            Map<String, String> parameters = Collections.singletonMap("name", name);
+            return jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, parameters, pizzaRowMapper);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 }
