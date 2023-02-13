@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api")
 public class DrinkController {
@@ -23,10 +25,28 @@ public class DrinkController {
         return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/drink")
-    public ResponseEntity<Drink> addDrink (@RequestBody Drink drink){
+    @GetMapping("/drink")
+    public ResponseEntity<?> getDrinkById(@PathVariable String id){
+        Optional<Drink> optDrink = repository.findById(id);
+        if (optDrink.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(optDrink.get(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/drink", method = {RequestMethod.POST, RequestMethod.PUT})
+    public ResponseEntity<?> updateDrink(@RequestBody Drink drink) {
         return new ResponseEntity<>(repository.save(drink), HttpStatus.CREATED);
     }
 
+    @DeleteMapping ("/drink/{id}")
+    public ResponseEntity <?> deleteDrink (@PathVariable String id){
+        Optional <Drink> drinkOpt = repository.findById(id);
+        if (drinkOpt.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        repository.delete(drinkOpt.get());
+        return ResponseEntity.notFound().build();
+    }
 
 }

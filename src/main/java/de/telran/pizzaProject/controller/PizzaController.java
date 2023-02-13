@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api")
 public class PizzaController {
@@ -19,12 +21,35 @@ public class PizzaController {
     }
 
     @GetMapping("/pizzas")
-    public ResponseEntity <Iterable <Pizza>> getAllPizzas(){
+    public ResponseEntity<Iterable<Pizza>> getAllPizzas() {
         return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/pizza")
-    public ResponseEntity<Pizza> addPizza (@RequestBody Pizza pizza){
+    @GetMapping("/pizza/{id}")
+    public ResponseEntity<?> getPizzaById(@PathVariable String id){
+        Optional<Pizza> optPizza = repository.findById(id);
+        if (optPizza.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(optPizza.get(), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/pizza", method = {RequestMethod.POST, RequestMethod.PUT})
+    public ResponseEntity<?> updatePizza(@RequestBody Pizza pizza) {
         return new ResponseEntity<>(repository.save(pizza), HttpStatus.CREATED);
     }
+
+    @DeleteMapping ("/pizza/{id}")
+    public ResponseEntity <?> deletePizza (@PathVariable String id){
+        Optional <Pizza> pizzaOpt = repository.findById(id);
+        if (pizzaOpt.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        repository.delete(pizzaOpt.get());
+        return ResponseEntity.notFound().build();
+    }
+
+
+
 }
