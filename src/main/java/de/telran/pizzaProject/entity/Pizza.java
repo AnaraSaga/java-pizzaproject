@@ -4,15 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @NoArgsConstructor
-@Table (name = "pizza")
+@Table(name = "pizza")
 public class Pizza {
 
     @Id
@@ -28,4 +25,7 @@ public class Pizza {
 
     private String image;
 
+    @ManyToOne (optional = false, cascade = CascadeType.ALL)
+    @JoinColumn (name ="pizza_id")
+    private Cafe cafe;
 }

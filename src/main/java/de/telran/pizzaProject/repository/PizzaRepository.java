@@ -5,5 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface PizzaRepository extends CrudRepository<Pizza, String> {
+        Pizza findByName(String name);
 
+// ToDo fix it
+//     List <Pizza> findPizzasByOrderByPricePriceAsc();
 }

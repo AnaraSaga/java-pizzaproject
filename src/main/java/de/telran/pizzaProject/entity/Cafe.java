@@ -4,19 +4,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table (name = "cafe")
+@Table(name = "cafe")
 public class Cafe {
 
     @Id
-    @GeneratedValue (generator = "system-uuid")
+    @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
@@ -26,5 +24,9 @@ public class Cafe {
 
     private String phoneNumber;
 
+    @OneToMany (mappedBy = "cafe")
+    private List<Pizza> pizzas;
 
+    @OneToMany (mappedBy = "cafe")
+    private List<Drink> drinks;
 }

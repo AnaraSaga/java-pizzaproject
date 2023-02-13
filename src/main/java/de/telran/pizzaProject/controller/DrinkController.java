@@ -25,13 +25,22 @@ public class DrinkController {
         return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/drink")
+    @GetMapping("/drink/{id}")
     public ResponseEntity<?> getDrinkById(@PathVariable String id){
         Optional<Drink> optDrink = repository.findById(id);
         if (optDrink.isEmpty()){
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(optDrink.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/drink")
+    public ResponseEntity<?> getDrinkByName(@RequestParam String name){
+        Drink drink = repository.findByName(name);
+        if (drink == null){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(drink, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/drink", method = {RequestMethod.POST, RequestMethod.PUT})

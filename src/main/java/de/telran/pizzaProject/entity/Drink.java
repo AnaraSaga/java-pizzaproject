@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -16,7 +13,7 @@ import javax.persistence.Table;
 public class Drink {
 
     @Id
-    @GeneratedValue (generator = "system-uuid")
+    @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
@@ -28,5 +25,8 @@ public class Drink {
 
     private String image;
 
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+            @JoinColumn (name= "drink_id" )
+    Cafe cafe;
 
 }

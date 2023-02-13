@@ -25,6 +25,11 @@ public class PizzaController {
         return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
     }
 
+//    @GetMapping("/pizzas")
+//    public ResponseEntity<Iterable<Pizza>> sortAllPizzasByPriceAsc() {
+//        return new ResponseEntity<>(repository.findPizzasByOrderByPricePriceAsc(), HttpStatus.OK);
+//    }
+
     @GetMapping("/pizza/{id}")
     public ResponseEntity<?> getPizzaById(@PathVariable String id){
         Optional<Pizza> optPizza = repository.findById(id);
@@ -32,6 +37,15 @@ public class PizzaController {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(optPizza.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/pizza")
+    public ResponseEntity<?> getPizzaByName(@RequestParam String name){
+        Pizza pizza = repository.findByName(name);
+        if (pizza == null){
+            return ResponseEntity.notFound().build();
+        }
+        return new ResponseEntity<>(pizza, HttpStatus.OK);
     }
 
 
