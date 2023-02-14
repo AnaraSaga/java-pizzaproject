@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "cafe")
 public class Cafe {
 
     @Id
@@ -24,9 +23,9 @@ public class Cafe {
 
     private String phoneNumber;
 
-    @OneToMany (mappedBy = "cafe")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "cafe")
     private List<Pizza> pizzas;
 
-    @OneToMany (mappedBy = "cafe")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cafe")
     private List<Drink> drinks;
 }

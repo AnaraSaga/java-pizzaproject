@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "drink")
 public class Drink {
 
     @Id
@@ -25,8 +24,7 @@ public class Drink {
 
     private String image;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-            @JoinColumn (name= "drink_id" )
+    @ManyToOne(optional = false)
     Cafe cafe;
 
 }

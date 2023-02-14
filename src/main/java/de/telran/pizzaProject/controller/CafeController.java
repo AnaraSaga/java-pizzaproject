@@ -21,7 +21,7 @@ public class CafeController {
 
     @GetMapping("/cafes")
     public ResponseEntity<Iterable<Cafe>> getAllCafes() {
-        return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findByOrderByName(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/cafe", method = {RequestMethod.POST, RequestMethod.PUT})
