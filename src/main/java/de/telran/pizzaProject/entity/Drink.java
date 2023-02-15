@@ -24,7 +24,7 @@ public class Drink {
 
     private String image;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     Cafe cafe;
 
 }

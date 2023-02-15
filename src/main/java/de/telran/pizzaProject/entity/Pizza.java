@@ -24,7 +24,7 @@ public class Pizza {
 
     private String image;
 
-    @ManyToOne (optional = true, fetch = FetchType.EAGER)
+    @ManyToOne (optional = true, cascade = CascadeType.ALL)
     private Cafe cafe;
 
 }
