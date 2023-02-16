@@ -78,7 +78,7 @@ head, body {
 .welcome #text {
     font-family: Raleway, sans-serif;
     color: #333333;
-    font-size: 18px;
+    font-size: 38px;
     font-weight: 700;
     font-style: italic;
     line-height: 14px;
@@ -99,46 +99,11 @@ head, body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /*background-color: green;*/
     text-shadow: 1px 1px 1px #000000;
 }
 
 .icons a {
     color: white;
-}
-
-#funride {
-    font-family: Raleway2, sans-serif;
-    color: #fff51f;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 34px;
-    text-align: left;
-    width: 275px;
-    position: absolute;
-    top: 195px;
-    left: 748px;
-    text-shadow: 1px 1px 1px #000000;
-}
-
-#super {
-    font-family: Raleway3, sans-serif;
-    color: #fff51f;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
-    width: 315px;
-    position: absolute;
-    top: 300px;
-    left: 748px;
-    text-shadow: 1px 1px 1px #000000;
-}
-
-
-.BuyNow:active {
-    box-shadow: 0px 0px 10px rgb(109, 16, 16);
-    margin-top: 2px;
 }
 
 .content {
@@ -152,27 +117,14 @@ head, body {
     width: 270px;
     height: 473px;
     float: left;
-    /*background-color: green;*/
     margin-top: -20px;
-}
-
-.now {
-    width: 270px;
-    height: 300px;
-    float: left;
-    margin-top: 30px;
-    position: relative;
-    background: url("../images/Shop.jpg") no-repeat;
-    background-size: cover;
 }
 
 .products {
     width: 870px;
-    /*height: 1643px;*/
     min-height: 1643px;
     float: right;
     background-color: #f8f8f8;
-    /*background-color: red;*/
     margin-top: -20px;
 }
 
@@ -247,14 +199,14 @@ head, body {
     left: 140px;
 }
 
-.newproducts {
+.pizza_products {
     width: 100%;
     min-height: 752px;
     position: relative;
     float: left;
 }
 
-.topproducts {
+.drink_products {
     width: 100%;
     /*height: 400px;*/
     min-height: 400px;
@@ -264,7 +216,7 @@ head, body {
     /*background-color: red;*/
 }
 
-#newproducts_caption {
+#pizza_products_caption {
     width: 100%;
     height: 80px;
     margin-top: -20px;
@@ -272,9 +224,9 @@ head, body {
     float: left;
 }
 
-#newproducts_caption p {
+#pizza_products_caption p {
     font-family: Roboto, sans-serif;
-    color: #707070;
+    color: #721414;
     font-size: 22px;
     font-weight: 900;
     font-style: italic;
@@ -283,7 +235,7 @@ head, body {
     padding-top: 26px;
 }
 
-#topproducts_caption {
+#drink_products_caption {
     width: 100%;
     height: 80px;
     margin-top: -20px;
@@ -291,9 +243,9 @@ head, body {
     float: left;
 }
 
-#topproducts_caption p {
+#drink_products_caption p {
     font-family: Roboto, sans-serif;
-    color: #707070;
+    color: #721414;
     font-size: 22px;
     font-weight: 900;
     font-style: italic;
@@ -319,7 +271,7 @@ head, body {
 }
 
 .product:hover {
-    background-color: #aaaaaa;
+    background-color: #721414;
 }
 
 .product:active {
@@ -399,7 +351,7 @@ head, body {
     border: 1px solid transparent;
 }
 #foto img:hover {
-    border: 1px solid #bbbbbb;
+    border: 1px solid #f8f6f6;
 }
 #stride {
     width: 100%;
