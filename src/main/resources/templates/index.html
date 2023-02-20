@@ -37,74 +37,29 @@
             <a href="#">
                 <div class="menuitem"><p>Order Now</p></div>
             </a>
-            <a href="#">
+            <a th:href="@{/admin}">
                 <div class="menuitem"><p>Admin</p></div>
             </a>
         </nav>
 
-        <div class="products">
-            <div class="pizza_products">
+        <div  class="products">
+            <div th:each="element : ${map}" class="pizza_products">
                 <div id="pizza_products_caption">
-                    <p>Pizzas</p>
-                </div>
-                <div >
-                    <a th:each="pizza: ${pizzas}" href="#" class="product">
-                        <img class="foto" src="images/margherita.jpg" alt="foto1">
-                        <div class="product_name">
-                            Margherita
-                        </div>
-                        <div class="product_price">
-                            &euro; 12.00<br>
-                        </div>
-                    </a>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/salami.jpg" alt="foto2">
-                        <div class="product_name">
-                            Salami
-                        </div>
-                        <div class="product_price">
-                            &euro; 15.00<br>
-                        </div>
-                    </a>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/Veggie-Pizza3.jpg" alt="foto3">
-                        <div class="product_name">
-                            Veggietarian
-                        </div>
-                        <div class="product_price">
-                            &euro; 15.00<br>
-
-                        </div>
-                    </a>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/mushroom.jpg" alt="foto4">
-                        <div class="product_name">
-                            Mushroom
-                        </div>
-                        <div class="product_price">
-                            &euro; 15.00<br>
-                        </div>
-                    </a>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/bolognese.jpg" alt="foto5">
-                        <div class="product_name">
-                            Bolognese
-                        </div>
-                        <div class="product_price">
-                            &euro; 18.00<br>
-                        </div>
-                    </a>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/4cheese-pizza.jpg" alt="foto6">
-                        <div class="product_name">
-                            4Cheese
-                        </div>
-                        <div class="product_price">
-                            &euro; 15.00<br>
-                        </div>
-                    </a>
+                    <p th:text = "${element.key.name}"/>
+                    <div >
+                        <a th:each="pizza: ${element.value}" href="#" class="product">
+                            <img class="foto" th: src="@{${'/images/' + pizza.image}}" alt="foto1">
+                            <div class="product_name">
+                                <span th:text="${pizza.name}"/>
+                            </div>
+                            <div class="product_price">
+                                &euro; <span th:text="${pizza.price}"/><br>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
+
             <div class="drink_products">
                 <div id="drink_products_caption">
                     <p>Drinks</p>
