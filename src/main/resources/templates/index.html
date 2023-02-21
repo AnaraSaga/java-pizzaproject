@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title>Pizzeria</title>
@@ -16,7 +15,6 @@
         <div class="welcome">
             <p id="welcome">Welcome to Oma's Pizzeria</p>
         </div>
-
         <div class="icons">
             <a href="#"><i class="fa fa-facebook fa-1x" aria-hidden="true"></i></a>
             <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -25,7 +23,6 @@
             <a href="#"><i class="fa fa-camera-retro" aria-hidden="true"></i></a>
         </div>
     </div>
-
 </header>
 <main class="BigContent">
     <div class="content">
@@ -41,14 +38,13 @@
                 <div class="menuitem"><p>Admin</p></div>
             </a>
         </nav>
-
         <div  class="products">
             <div th:each="element : ${map}" class="pizza_products">
                 <div id="pizza_products_caption">
-                    <p th:text = "${element.key.name}"/>
+                    <p th:text="${element.key.name}"></p>
                     <div >
-                        <a th:each="pizza: ${element.value}" href="#" class="product">
-                            <img class="foto" th: src="@{${'/images/' + pizza.image}}" alt="foto1">
+                        <a th:each="pizza : ${element.value}" href="#" class="product">
+                            <img class="foto" th:src="@{'/image/' + ${pizza.image}}"  alt="foto1">
                             <div class="product_name">
                                 <span th:text="${pizza.name}"/>
                             </div>
@@ -59,43 +55,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="drink_products">
-                <div id="drink_products_caption">
-                    <p>Drinks</p>
-                </div>
-                <div>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/coca-cola.jpg" alt="foto7">
-                        <div class="product_name">
-                            Cola
-                        </div>
-                        <div class="product_price">
-                            &euro; 5.00<br>
-                        </div>
-                    </a>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/sprite.jpg" alt="foto8">
-                        <div class="product_name">
-                            Sprite
-                        </div>
-                        <div class="product_price">
-                            &euro; 5.00<br>
-                        </div>
-                    </a>
-                    <a href="#" class="product">
-                        <img class="foto" src="images/fanta.jpg" alt="foto8">
-                        <div class="product_name">
-                            Fanta
-                        </div>
-                        <div class="product_price">
-                            &euro; 5.00<br>
-                        </div>
-                    </a>
-                </div>
-            </div>
         </div>
-
         <div id="instagram">
             <p>
                 <i class="fa fa-instagram" aria-hidden="true"></i>
