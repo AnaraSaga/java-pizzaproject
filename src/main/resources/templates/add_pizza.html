@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-<form id="admin_form" th:action="@{/addCafe}" method="post" th:object="${cafe}">
+<form id="admin_form" th:action="@{/addPizza}" method="post" th:object="${pizza}">
     <div class="mb-3" hidden="true">
         <label for="inputId" class="form-label">Id</label>
         <input type="text" class="form-control" id="inputId" aria-describedby="emailHelp" th:field="*{id}">
@@ -19,12 +19,20 @@
         <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" th:field="*{name}">
     </div>
     <div class="mb-3">
-        <label for="InputAddress" class="form-label">Address</label>
-        <input type="text" class="form-control" id="inputAddress" aria-describedby="emailHelp" th:field="*{address}">
+        <label for="InputPrice" class="form-label">Price</label>
+        <input type="text" class="form-control" id="inputPrice" aria-describedby="emailHelp" th:field="*{price}">
     </div>
     <div class="mb-3">
-        <label for="inputPhoneNumber" class="form-label">PhoneNumber</label>
-        <input type="text" class="form-control" id="inputPhoneNumber" aria-describedby="emailHelp" th:field="*{phoneNumber}">
+        <label for="inputDescription" class="form-label">Description</label>
+        <input type="text" class="form-control" id="inputDescription" aria-describedby="emailHelp" th:field="*{description}">
+    </div>
+    <div class="mb-3">
+        <label for="inputImage" class="form-label">Image</label>
+        <input type="text" class="form-control" id="inputImage" aria-describedby="emailHelp" th:field="*{image}">
+    </div>
+    <div class="mb-3">
+        <label for="inputCafe" class="form-label">Cafe</label>
+        <input type="text" class="form-control" id="inputCafe" aria-describedby="emailHelp" th:field="*{cafe.name}">
     </div>
     <button type="submit" class="btn btn-outline-success">Submit</button>
 </form>
