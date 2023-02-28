@@ -1,60 +1,54 @@
 package de.telran.pizzaProject.controller;
 
 import de.telran.pizzaProject.entity.Cafe;
-import de.telran.pizzaProject.repository.CafeRepository;
+import de.telran.pizzaProject.service.CafeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/api")
+@Controller
 public class CafeController {
-    private final CafeRepository repository;
+    private final CafeService cafeService;
 
     @Autowired
-    public CafeController(CafeRepository repository) {
-        this.repository = repository;
+    public CafeController(CafeService cafeService) {
+        this.cafeService = cafeService;
+    }
+
+    @PostMapping("/addCafe")
+    public String addCafe(Cafe cafe, Model model) {
+        cafeService.saveCafe(cafe);
+        return "redirect:/cafes";
     }
 
     @GetMapping("/cafes")
-    public ResponseEntity<Iterable<Cafe>> getAllCafes() {
-        return new ResponseEntity<>(repository.findByOrderByName(), HttpStatus.OK);
+    public String cafeTable(Model model) {
+        model.addAttribute("cafes", cafeService.getAllCafes());
+        return "cafes";
     }
 
-    @RequestMapping(value = "/cafe", method = {RequestMethod.POST, RequestMethod.PUT})
-    public ResponseEntity<?> updateCafe(@RequestBody Cafe cafe) {
-        return new ResponseEntity<>(repository.save(cafe), HttpStatus.CREATED);
+    @GetMapping("/addCafe")  //for btn submit
+    public String addCafe(Model model) {
+        Cafe cafe = new Cafe();
+        model.addAttribute("cafe", cafe);
+        return "cafe";
     }
 
-    @GetMapping("/cafe/{id}")
-    public ResponseEntity<?> getCafeById(@PathVariable String id){
-        Optional<Cafe> optCafe = repository.findById(id);
-        if (optCafe.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(optCafe.get(), HttpStatus.OK);
+    @GetMapping("/editCafe/{id}") // for btn edit -edit cafe by id
+    public String editCafe(@PathVariable String id, Model model) {  // find id in path
+        Cafe cafe = cafeService.getCafeById(id);
+        model.addAttribute("cafe", cafe);
+        return "cafe";
     }
 
-    @GetMapping("/cafe")
-    public ResponseEntity<?> getCafeByName(@RequestParam String name){
-        Cafe cafe = repository.findByName(name);
-        if (cafe == null){
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(cafe, HttpStatus.OK);
-    }
-
-    @DeleteMapping ("/cafe/{id}")
-    public ResponseEntity <?> deleteCafe (@PathVariable String id){
-        Optional <Cafe> cafeOpt = repository.findById(id);
-        if (cafeOpt.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        repository.delete(cafeOpt.get());
-        return ResponseEntity.notFound().build();
+    @GetMapping("/deleteCafe/{id}")
+    public String deleteCafe(@PathVariable String id, Model model) {
+        cafeService.deleteCafeById(id);
+        model.addAttribute("cafe", cafeService.getAllCafes());
+        return "redirect:/cafes";
     }
 
 }

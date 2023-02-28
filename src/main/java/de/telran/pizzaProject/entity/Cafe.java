@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,9 +26,7 @@ public class Cafe {
 
     private String phoneNumber;
 
-//    @OneToMany (cascade = CascadeType.ALL, mappedBy = "cafe")
-//    private List<Pizza> pizzas;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cafe")
-//    private List<Drink> drinks;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cafe")
+    private List<Pizza> pizzasInCafe = new ArrayList<>();
+
 }

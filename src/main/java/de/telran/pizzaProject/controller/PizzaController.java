@@ -1,69 +1,78 @@
 package de.telran.pizzaProject.controller;
 
 import de.telran.pizzaProject.entity.Pizza;
-import de.telran.pizzaProject.repository.PizzaRepository;
+import de.telran.pizzaProject.service.CafeService;
+import de.telran.pizzaProject.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
-@RestController
-@RequestMapping("/api")
+@Controller
 public class PizzaController {
 
-    private final PizzaRepository repository;
+    @Value("${iamges.dir}")
+    private String imagesDir;
+    private final CafeService cafeService;
+    private final PizzaService pizzaService;
 
     @Autowired
-    public PizzaController(PizzaRepository repository) {
-        this.repository = repository;
+    public PizzaController(CafeService cafeService, PizzaService pizzaService) {
+        this.cafeService = cafeService;
+        this.pizzaService = pizzaService;
+    }
+
+    @GetMapping("/image/{filename}")
+    public ResponseEntity<byte[]> downloadImage(@PathVariable String filename) throws IOException {
+        byte[] image = Files.readAllBytes(new File(imagesDir + "\\" + filename).toPath());
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(image);
+
+    }
+
+    @PostMapping("/addPizza")
+    public String addPizza(Pizza pizza, @RequestParam("image") MultipartFile file, Model model) throws IOException {
+        pizzaService.saveImage(file, pizza);
+        return "redirect:/pizzas";
     }
 
     @GetMapping("/pizzas")
-    public ResponseEntity<Iterable<Pizza>> getAllPizzas() {
-        return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+    public String pizzasTable(Model model) {
+        model.addAttribute("pizzas", pizzaService.getAllPizzas());
+        return "pizzas";
     }
 
-//    @GetMapping("/pizzas")
-//    public ResponseEntity<Iterable<Pizza>> sortAllPizzasByPriceAsc() {
-//        return new ResponseEntity<>(repository.findPizzasByOrderByPricePriceAsc(), HttpStatus.OK);
-//    }
-
-    @GetMapping("/pizza/{id}")
-    public ResponseEntity<?> getPizzaById(@PathVariable String id){
-        Optional<Pizza> optPizza = repository.findById(id);
-        if (optPizza.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(optPizza.get(), HttpStatus.OK);
+    @GetMapping("/addPizza")  //for btn submit
+    public String addPizza(Model model) {
+        Pizza pizza = new Pizza();
+        model.addAttribute("pizza", pizza);
+        model.addAttribute("cafes", cafeService.getAllCafes());  //
+        return "pizza";
     }
 
-    @GetMapping("/pizza")
-    public ResponseEntity<?> getPizzaByName(@RequestParam String name){
-        Pizza pizza = repository.findByName(name);
-        if (pizza == null){
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(pizza, HttpStatus.OK);
+    @GetMapping("/editPizza/{id}")
+    public String editPizza(@PathVariable String id, Model model) {
+        Pizza pizza = pizzaService.getPizzaById(id);
+        model.addAttribute("pizza", pizza);
+        return "pizza";
     }
 
-
-    @RequestMapping(value = "/pizza", method = {RequestMethod.POST, RequestMethod.PUT})
-    public ResponseEntity<?> updatePizza(@RequestBody Pizza pizza) {
-        return new ResponseEntity<>(repository.save(pizza), HttpStatus.CREATED);
+    @GetMapping("/deletePizza/{id}")
+    public String deletePizza(@PathVariable String id, Model model) {
+        pizzaService.deletePizzaById(id);
+        model.addAttribute("pizza", pizzaService.getAllPizzas());
+        return "redirect:/pizzas";
     }
-
-    @DeleteMapping ("/pizza/{id}")
-    public ResponseEntity <?> deletePizza (@PathVariable String id){
-        Optional <Pizza> pizzaOpt = repository.findById(id);
-        if (pizzaOpt.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        repository.delete(pizzaOpt.get());
-        return ResponseEntity.notFound().build();
-    }
-
-
 
 }
