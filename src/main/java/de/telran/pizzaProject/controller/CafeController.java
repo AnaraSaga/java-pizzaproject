@@ -5,9 +5,12 @@ import de.telran.pizzaProject.service.CafeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class CafeController {
@@ -19,7 +22,10 @@ public class CafeController {
     }
 
     @PostMapping("/addCafe")
-    public String addCafe(Cafe cafe, Model model) {
+    public String addCafe(@Valid Cafe cafe, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()){
+            return "cafe";
+        }
         cafeService.saveCafe(cafe);
         return "redirect:/cafes";
     }
@@ -37,8 +43,8 @@ public class CafeController {
         return "cafe";
     }
 
-    @GetMapping("/editCafe/{id}") // for btn edit -edit cafe by id
-    public String editCafe(@PathVariable String id, Model model) {  // find id in path
+    @GetMapping("/editCafe/{id}")
+    public String editCafe(@PathVariable String id, Model model) {
         Cafe cafe = cafeService.getCafeById(id);
         model.addAttribute("cafe", cafe);
         return "cafe";

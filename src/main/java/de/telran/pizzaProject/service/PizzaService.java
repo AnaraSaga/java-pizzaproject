@@ -19,7 +19,6 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class PizzaService {
-
     @Value("${images.dir}")
     private String imagesDir;
 
@@ -32,21 +31,21 @@ public class PizzaService {
 
     //save Image to DB
     public void saveImage(MultipartFile file, Pizza pizza) throws IOException {
-        String filename = file.getName();
-        pizza.setImage(filename);
-        Path path = Paths.get(imagesDir + "\\" + filename);
+        String fileName = file.getOriginalFilename();
+        pizza.setImage(fileName);
+        Path path = Paths.get(imagesDir + "\\" + fileName);
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         pizzaRepository.save(pizza);
     }
 
-    // find of all pizzas
     public List<Pizza> getAllPizzas(){
         return StreamSupport.stream(pizzaRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
     public Pizza getPizzaById (String id){
-        return pizzaRepository.findById(id).get();
+        Pizza pizza = pizzaRepository.findById(id).get();
+        return pizza;
     }
 
     public List<Pizza> getPizzaByCafe(Cafe cafe){
@@ -60,7 +59,5 @@ public class PizzaService {
     public void savePizza(Pizza pizza){
         pizzaRepository.save(pizza);
     }
-
-
 
 }

@@ -10,12 +10,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +25,7 @@ import java.nio.file.Files;
 @Controller
 public class PizzaController {
 
-    @Value("${iamges.dir}")
+    @Value("${images.dir}")
     private String imagesDir;
     private final CafeService cafeService;
     private final PizzaService pizzaService;
@@ -42,7 +44,14 @@ public class PizzaController {
     }
 
     @PostMapping("/addPizza")
-    public String addPizza(Pizza pizza, @RequestParam("image") MultipartFile file, Model model) throws IOException {
+    public String addPizza(@Valid Pizza pizza,
+                           BindingResult bindingResult,
+                           @RequestParam("image") MultipartFile file,
+                           Model model
+    ) throws IOException {
+        if (bindingResult.hasErrors()){
+            return "pizza";
+        }
         pizzaService.saveImage(file, pizza);
         return "redirect:/pizzas";
     }
@@ -53,18 +62,19 @@ public class PizzaController {
         return "pizzas";
     }
 
-    @GetMapping("/addPizza")  //for btn submit
+    @GetMapping("/addPizza")  //for btn add
     public String addPizza(Model model) {
         Pizza pizza = new Pizza();
         model.addAttribute("pizza", pizza);
-        model.addAttribute("cafes", cafeService.getAllCafes());  //
+        model.addAttribute("cafes", cafeService.getAllCafes());  //shows all cafes in the list
         return "pizza";
     }
 
-    @GetMapping("/editPizza/{id}")
+    @GetMapping("/editPizza/{id}")  // for btn edit
     public String editPizza(@PathVariable String id, Model model) {
         Pizza pizza = pizzaService.getPizzaById(id);
         model.addAttribute("pizza", pizza);
+        model.addAttribute("cafes", cafeService.getAllCafes());  //receive list of cafes and shows in attribute
         return "pizza";
     }
 
