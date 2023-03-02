@@ -34,4 +34,9 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String admin(Model model){
+        return "login";
+    }
+
 }
