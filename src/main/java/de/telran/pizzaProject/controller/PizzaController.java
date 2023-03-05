@@ -50,7 +50,8 @@ public class PizzaController {
                            Model model
     ) throws IOException {
         if (bindingResult.hasErrors()){
-            return "pizza";
+            model.addAttribute("cafes", cafeService.getAllCafes());
+        return "pizza";
         }
         pizzaService.saveImage(file, pizza);
         return "redirect:/pizzas";

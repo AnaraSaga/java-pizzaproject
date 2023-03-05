@@ -32,7 +32,7 @@ public class PizzaService {
     //save Image to DB
     public void saveImage(MultipartFile file, Pizza pizza) throws IOException {
         String fileName = file.getOriginalFilename();
-        pizza.setImage(fileName);
+        pizza.setPicture(fileName);
         Path path = Paths.get(imagesDir + "\\" + fileName);
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         pizzaRepository.save(pizza);

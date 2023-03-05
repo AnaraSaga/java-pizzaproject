@@ -31,7 +31,7 @@ public class Pizza {
     @Column(columnDefinition = "text")
     private String description;
 
-    private String image;
+    private String picture;
 
     @ManyToOne (optional = false, cascade = CascadeType.ALL)
     private Cafe cafe;
