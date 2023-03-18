@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -33,11 +35,8 @@ public class Pizza {
 
     private String picture;
 
-    @ManyToOne (optional = false, cascade = CascadeType.ALL)
+    @ManyToOne (optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Cafe cafe;
 
-//    @ManyToMany
-//    @JoinTable(name ="pizza_ingredient")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    private List<Ingredient> ingredients;
 }

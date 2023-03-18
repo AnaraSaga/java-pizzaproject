@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,9 +39,8 @@ public class PizzaController {
 
     @GetMapping("/image/{filename}")
     public ResponseEntity<byte[]> downloadImage(@PathVariable String filename) throws IOException {
-        byte[] image = Files.readAllBytes(new File(imagesDir + "\\" + filename).toPath());
+        byte[] image = Files.readAllBytes(new File(imagesDir + "/" + filename).toPath());
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(image);
-
     }
 
     @PostMapping("/addPizza")
@@ -49,16 +49,25 @@ public class PizzaController {
                            @RequestParam("image") MultipartFile file,
                            Model model
     ) throws IOException {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("cafes", cafeService.getAllCafes());
-        return "pizza";
+            return "pizza";
         }
-        pizzaService.saveImage(file, pizza);
+        Pizza pizzaFromDb = pizzaService.getPizzaById(pizza.getId());
+        if (file.isEmpty() && pizzaFromDb == null) {
+            bindingResult.addError(new FieldError("pizza", "picture", "File is not loaded"));
+            model.addAttribute("cafes", cafeService.getAllCafes());
+            return "pizza";
+        }
+        if (pizzaFromDb != null) {
+            pizza.setPicture(pizzaFromDb.getPicture());
+        }
+        pizzaService.savePizza(file, pizza);
         return "redirect:/pizzas";
     }
 
     @GetMapping("/pizzas")
-    public String pizzasTable(Model model) {
+    public String pizzaTable(Model model) {
         model.addAttribute("pizzas", pizzaService.getAllPizzas());
         return "pizzas";
     }
@@ -71,11 +80,11 @@ public class PizzaController {
         return "pizza";
     }
 
-    @GetMapping("/editPizza/{id}")  // for btn edit
+    @GetMapping("editPizza/{id}")
     public String editPizza(@PathVariable String id, Model model) {
         Pizza pizza = pizzaService.getPizzaById(id);
         model.addAttribute("pizza", pizza);
-        model.addAttribute("cafes", cafeService.getAllCafes());  //receive list of cafes and shows in attribute
+        model.addAttribute("cafes", cafeService.getAllCafes());
         return "pizza";
     }
 
@@ -85,5 +94,6 @@ public class PizzaController {
         model.addAttribute("pizza", pizzaService.getAllPizzas());
         return "redirect:/pizzas";
     }
+
 
 }

@@ -30,11 +30,13 @@ public class PizzaService {
     }
 
     //save Image to DB
-    public void saveImage(MultipartFile file, Pizza pizza) throws IOException {
-        String fileName = file.getOriginalFilename();
-        pizza.setPicture(fileName);
-        Path path = Paths.get(imagesDir + "\\" + fileName);
-        Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+    public void savePizza(MultipartFile file, Pizza pizza) throws IOException {
+        if (!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();
+            pizza.setPicture(fileName);
+            Path path = Paths.get(imagesDir + "\\" + fileName);
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        }
         pizzaRepository.save(pizza);
     }
 
@@ -54,10 +56,6 @@ public class PizzaService {
 
     public void deletePizzaById(String id){
         pizzaRepository.deleteById(id);
-    }
-
-    public void savePizza(Pizza pizza){
-        pizzaRepository.save(pizza);
     }
 
 }

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -34,7 +36,8 @@ public class Cafe {
 
     private String phoneNumber;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cafe")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cafe")
+    @OnDelete( action = OnDeleteAction.CASCADE)
     private List<Pizza> pizzasInCafe = new ArrayList<>();
 
 }

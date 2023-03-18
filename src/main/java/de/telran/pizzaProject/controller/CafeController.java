@@ -2,6 +2,7 @@ package de.telran.pizzaProject.controller;
 
 import de.telran.pizzaProject.entity.Cafe;
 import de.telran.pizzaProject.service.CafeService;
+import de.telran.pizzaProject.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,13 @@ import javax.validation.Valid;
 @Controller
 public class CafeController {
     private final CafeService cafeService;
+    private final PizzaService pizzaService;
 
     @Autowired
-    public CafeController(CafeService cafeService) {
+    public CafeController(CafeService cafeService, PizzaService pizzaService) {
+
         this.cafeService = cafeService;
+        this.pizzaService = pizzaService;
     }
 
     @PostMapping("/addCafe")
