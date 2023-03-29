@@ -20,23 +20,26 @@ public class CafeService {
         this.cafeRepository = cafeRepository;
     }
 
-    //finf all cafes
-    public List<Cafe> getAllCafes(){
+    //find all cafes
+    public List<Cafe> getAllCafes() {
         return StreamSupport.stream(cafeRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public Cafe getCafeById (String id){
-        return cafeRepository.findById(id).get();
+    public void saveCafe(Cafe cafe) {
+        cafeRepository.save(cafe);
+    }
+
+    public Cafe getCafeById(String id) {
+
+        return cafeRepository.findById(id).orElse(null);
     }
 
     //
-    public void deleteCafeById(String id){
+    public void deleteCafeById(String id) {
+
         cafeRepository.deleteById(id);
     }
 
-    public void saveCafe(Cafe cafe){
-        cafeRepository.save(cafe);
-    }
 
 }

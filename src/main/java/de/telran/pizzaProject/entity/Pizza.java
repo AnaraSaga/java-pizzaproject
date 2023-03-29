@@ -21,8 +21,8 @@ public class Pizza {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
-    @NotNull (message = "the field should NOT be empty")
-    @NotBlank (message = "insert the correct name")
+    @NotNull(message = "the field should NOT be empty")
+    @NotBlank(message = "insert the correct name")
     @Size(min = 2, max = 20, message = "Insert the proper size")
     private String name;
 
@@ -35,7 +35,7 @@ public class Pizza {
 
     private String picture;
 
-    @ManyToOne (optional = false)
+    @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cafe cafe;
 

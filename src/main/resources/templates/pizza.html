@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,19 +16,20 @@
             <label for="inputName" class="form-label">Name</label>
             <input type="text" class="form-control" id="inputName" th:field="*{name}" required>
         </div>
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         <div class="mb-3">
             <label for="InputPrice" class="form-label">Price</label>
             <input type="number" step="any" class="form-control" id="inputPrice" th:field="*{price}">
+            <div id="validationInputPrice" class="alert alert-danger" role="alert"
+                 th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
         </div>
-        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
         <div class="mb-3">
             <label for="textAreaDescription" class="form-label">Description</label>
-            <textarea type="text" class="form-control" id="textAreaDescription" rows="3" th:field="*{description}"/>
+            <textarea class="form-control" id="textAreaDescription" rows="3" th:field="*{description}"/>
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
             <input type="file" class="form-control" id="image" name="image">
+            <div id="validationInputImage" class="invalid-feedback" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></div>
         </div>
         <div class="mb-3">
             <label for="dataBaseImage" class="form-label">Current Image</label>
@@ -42,6 +44,6 @@
         <br>
         <button type="submit" class="btn btn-outline-success">Submit</button>
     </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>

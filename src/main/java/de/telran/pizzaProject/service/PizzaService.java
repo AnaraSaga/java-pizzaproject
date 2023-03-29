@@ -34,27 +34,27 @@ public class PizzaService {
         if (!file.isEmpty()) {
             String fileName = file.getOriginalFilename();
             pizza.setPicture(fileName);
-            Path path = Paths.get(imagesDir + "\\" + fileName);
+            Path path = Paths.get(imagesDir + "/" + fileName);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
         }
         pizzaRepository.save(pizza);
     }
 
-    public List<Pizza> getAllPizzas(){
+    public List<Pizza> getAllPizzas() {
         return StreamSupport.stream(pizzaRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public Pizza getPizzaById (String id){
-        Pizza pizza = pizzaRepository.findById(id).get();
+    public Pizza getPizzaById(String id) {
+        Pizza pizza = pizzaRepository.findById(id).orElse(null);
         return pizza;
     }
 
-    public List<Pizza> getPizzaByCafe(Cafe cafe){
+    public List<Pizza> getPizzaByCafe(Cafe cafe) {
         return pizzaRepository.findByCafe(cafe);
     }
 
-    public void deletePizzaById(String id){
+    public void deletePizzaById(String id) {
         pizzaRepository.deleteById(id);
     }
 

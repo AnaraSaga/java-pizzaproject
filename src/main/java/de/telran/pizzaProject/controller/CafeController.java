@@ -27,7 +27,7 @@ public class CafeController {
 
     @PostMapping("/addCafe")
     public String addCafe(@Valid Cafe cafe, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "cafe";
         }
         cafeService.saveCafe(cafe);

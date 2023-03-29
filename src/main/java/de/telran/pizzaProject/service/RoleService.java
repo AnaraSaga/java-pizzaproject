@@ -12,11 +12,11 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public Role findByName(String name){
+    public Role findByName(String name) {
         return roleRepository.findByName(name);
     }
 
-    public Role save (Role role){
+    public Role save(Role role) {
         return roleRepository.save(role);
     }
 }

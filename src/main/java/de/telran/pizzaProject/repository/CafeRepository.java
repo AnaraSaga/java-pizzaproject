@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface CafeRepository extends CrudRepository<Cafe, String> {
-  List<Cafe> findByOrderByName ();
+    List<Cafe> findByOrderByName();
 }

@@ -26,18 +26,18 @@ public class Cafe {
     private String id;
 
     @NotNull(message = "The field 'Name' is NOT filled")
-    @NotBlank (message = "insert the proper name")
+    @NotBlank(message = "insert the proper name")
     @Size(min = 2, max = 20)
     private String name;
 
     @NotNull(message = "The field 'Address' is NOT filled")
-    @NotBlank (message = "insert the proper address")
+    @NotBlank(message = "insert the proper address")
     private String address;
 
     private String phoneNumber;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cafe")
-    @OnDelete( action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Pizza> pizzasInCafe = new ArrayList<>();
 
 }

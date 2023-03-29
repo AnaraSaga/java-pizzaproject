@@ -58,12 +58,12 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String admin(Model model){
+    public String admin(Model model) {
         return "login";
     }
 
     @GetMapping("/registration")
-    public String registration (Model model){
+    public String registration(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "registration";
@@ -72,23 +72,23 @@ public class MainController {
     @PostMapping("/registration")
     public String addUser(@Valid User user,
                           BindingResult bindingResult,
-                          HttpServletRequest request){
-        if (bindingResult.hasErrors()){
+                          HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
-        if (!user.getPassword().equals(user.getConfirmPassword())){
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
             bindingResult.addError(new FieldError(
                     "user", "password", "password must be equals!"));
-        return "registration";
+            return "registration";
         }
 
         String username = user.getLogin();
         String password = user.getPassword();
         Role role = roleService.findByName("ROLE_USER");
-        if (role == null){
+        if (role == null) {
             role = roleService.save(new Role("ROLE_USER"));
         }
-            userService.saveUser(user);
+        userService.saveUser(user);
 
         //
         SecurityContext securityContext = SecurityContextHolder.getContext();

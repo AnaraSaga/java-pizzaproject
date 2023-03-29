@@ -28,27 +28,27 @@ public class ControllerTest {
     PizzaRestController pizzaRestController;
 
     @Test
-    public void cafeControllerTest(){
+    public void cafeControllerTest() {
         Assertions.assertNotEquals(cafeController, null);
     }
 
     @Test
-    public void cafeRestControllerTest(){
+    public void cafeRestControllerTest() {
         Assertions.assertNotEquals(cafeRestController, null);
     }
 
     @Test
-    public void mainControllerTest(){
-        Assertions.assertNotEquals(mainController,null);
+    public void mainControllerTest() {
+        Assertions.assertNotEquals(mainController, null);
     }
 
     @Test
-    public void pizzaControllerTest(){
+    public void pizzaControllerTest() {
         Assertions.assertNotEquals(pizzaController, null);
     }
 
     @Test
-    public void pizzaRestControllerTest(){
+    public void pizzaRestControllerTest() {
         Assertions.assertNotEquals(pizzaRestController, null);
     }
 

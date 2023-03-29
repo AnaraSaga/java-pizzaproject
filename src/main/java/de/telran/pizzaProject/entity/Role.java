@@ -17,18 +17,18 @@ import java.util.List;
 public class Role {
 
     @Id
-    @GeneratedValue (generator = "system-uuid")
+    @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany (mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles")
     private List<User> users = new ArrayList<>();
 
-    public Role(String name){
-        this.name= name;
+    public Role(String name) {
+        this.name = name;
     }
 
 }

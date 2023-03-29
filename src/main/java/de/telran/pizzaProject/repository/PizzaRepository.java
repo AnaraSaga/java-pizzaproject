@@ -8,9 +8,9 @@ import java.util.List;
 
 
 public interface PizzaRepository extends CrudRepository<Pizza, String> {
-        Pizza findByName(String name);
+    Pizza findByName(String name);
 
-        List<Pizza> findByCafe (Cafe cafe);
+    List<Pizza> findByCafe(Cafe cafe);
 
 
 }

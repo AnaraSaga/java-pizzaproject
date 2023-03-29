@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <title>Pizzeria</title>
@@ -9,7 +10,6 @@
 </head>
 
 <body>
-
 <header class="BigHeader">
     <div class="header">
         <div class="welcome">
@@ -27,15 +27,23 @@
 <main class="BigContent">
     <div class="content">
         <nav class="menu">
-            <div id="menucaption"><p>Menu</p></div>
+            <div id="menucaption">
+                <p>Menu</p>
+            </div>
             <a href="#">
                 <div class="menuitem"><p>About</p></div>
             </a>
             <a href="#">
                 <div class="menuitem"><p>Order Now</p></div>
             </a>
-            <a th:href="@{/login}">
+            <a th:href="@{/caftes}" sec:authotize="hasRole('ROLE_ADMIN)">
+                <div class="menuitem"><p>Admin</p></div>
+            </a>
+            <a th:href="@{/login}" sec:authotize="isAnonymous()">
                 <div class="menuitem"><p>Login</p></div>
+            </a>
+            <a th:href="@{/logout}" sec:authotize="isAuthenticated()">
+                <div class="menuitem"><p>LogOut</p></div>
             </a>
         </nav>
         <div  class="products">
